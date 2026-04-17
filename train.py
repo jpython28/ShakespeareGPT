@@ -53,7 +53,7 @@ for epoch in range(2):
     loss = loss_func(outputs, y)
     loss.backward()
     optimizer.step()
-    print(f"Loss at epoch {epoch}, batch {i}: {loss.item()}, time: {time.perf_counter_ns()-start}")
+    print(f"Loss at epoch {epoch}, batch {i}: {loss.item()}, time: {round((time.perf_counter_ns()-start)*10**-9)} secs")
 with open(params["model_path"], "wb") as f:
   pickle.dump(model, f)
 
