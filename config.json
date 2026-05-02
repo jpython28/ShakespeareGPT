@@ -1,13 +1,14 @@
 {
     "vocab_size": 2048,
     "context_length": 128,
-    "batch_size": 128,
+    "batch_size": 1024,
     "d_model": 512,
-    "attn_layers": 5,
+    "attn_layers": 6,
     "attn_heads": 8,
     "feedforward_layers": 1,
     "feedforward_layer_size": 2048,
-    "learning_rate": 0.00001,
+    "learning_rate": 0.0001,
     "encoder_path": "encoder.pkl",
-    "model_path": "model.pkl"
+    "model_path": "model.pkl",
+    "epochs": 20
 }
