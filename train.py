@@ -9,6 +9,9 @@ import time
 from encoder import BytePairEncoder
 from dataset import BPEDataset
 from llm import LLM
+from torch.utils.tensorboard import SummaryWriter
+
+writer = SummaryWriter("runs/llm")
 
 with open("config.json", "r") as f:
   params = json.load(f)
@@ -55,6 +58,8 @@ for epoch in range(params["epochs"]):
     loss = loss_func(outputs.transpose(-2, -1), y)
     loss.backward()
     optimizer.step()
+    writer.add_scalar("loss", loss.item(), epoch*batch_per_epoch+i)
     print(f"Loss at epoch {epoch+1}/{params["epochs"]}, batch {i}/{batch_per_epoch}: {loss.item()}, time: {round((time.perf_counter_ns()-start)*10**-9, 4)} secs")
 with open(params["model_path"], "wb") as f:
   torch.save(model, f)
+writer.close()
