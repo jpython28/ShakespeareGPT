@@ -47,7 +47,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Running on {str(device).upper()}")
 model.to(device)
 loss_func = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=params["learning_rate"])
+optimizer = torch.optim.AdamW(model.parameters(), lr=params["learning_rate"])
 for epoch in range(params["epochs"]):
   for i, data in enumerate(train_loader):
     start = time.perf_counter_ns()
@@ -60,6 +60,6 @@ for epoch in range(params["epochs"]):
     optimizer.step()
     writer.add_scalar("loss", loss.item(), epoch*batch_per_epoch+i)
     print(f"Loss at epoch {epoch+1}/{params["epochs"]}, batch {i}/{batch_per_epoch}: {loss.item()}, time: {round((time.perf_counter_ns()-start)*10**-9, 4)} secs")
-with open(params["model_path"], "wb") as f:
-  torch.save(model, f)
+  with open(params["model_path"], "wb") as f:
+    torch.save(model, f)
 writer.close()
