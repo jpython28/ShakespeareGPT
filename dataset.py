@@ -1,3 +1,4 @@
+"""A dataset to hold Byte Pair encoded text."""
 import torch
 from torch.utils.data import Dataset
 from encoder import BytePairEncoder
@@ -11,4 +12,4 @@ class BPEDataset(Dataset):
   def __len__(self):
     return len(self.corpus)-self.context
   def __getitem__(self, idx):
-    return self.corpus[idx:idx+self.context], self.corpus[idx+1:idx+self.context+1]
+    return self.corpus[idx:idx+self.context], self.corpus[idx+1:idx+self.context+1] # expected output is inout window shifted one right

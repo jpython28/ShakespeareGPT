@@ -1,3 +1,4 @@
+"""A class to learn a vocabulary of tokens, encode text, and decode lists of bytes."""
 class BytePairEncoder:
   def __init__(self, max_tokens: int, corpus: str):
       self.max_tokens = max_tokens
@@ -33,9 +34,11 @@ class BytePairEncoder:
 
   @property
   def reversed_token_pairs(self):
+      """Reverse the token_pairs dictionary"""
       return {v: k for k, v in self.token_pairs.items()}
 
   def encode(self, corpus):
+      """Encode the given text using trained vocabulary"""
       corpus_bytes = list(bytearray(corpus, encoding="ascii"))
       for check_pair in self.token_pairs.keys():
         new_corpus_bytes = []
@@ -57,6 +60,7 @@ class BytePairEncoder:
 
 
   def decode(self, tokens: list[int]):
+      """Decode a list of tokens (bytes) into text using learned vocabulary"""
       corpus_bytes = tokens[:]
       while not all(map(lambda x: x < 128, corpus_bytes)):
           new_corpus_bytes = []
