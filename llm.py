@@ -48,7 +48,7 @@ class LLM(nn.Module):
     for i in range(self.attention_layers):
       residual = embedded
       embedded = self.layer_norms1[i](embedded)
-      embedded = residual + self.multiheadattentions[i](embedded, embedded, embedded, need_weights=False, attn_mask = self.attn_mask if mask else None)[0]
+      embedded = residual + self.multiheadattentions[i](embedded, embedded, embedded, need_weights=False, attn_mask = self.attn_mask[:embedded.shape[1], :embedded.shape[1]] if mask else None)[0]
       residual = embedded
       embedded = self.layer_norms2[i](embedded)
       embedded = residual + self.feed_forwards[i](embedded)
