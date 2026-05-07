@@ -1,0 +1,1 @@
+Large Language Model trained on benchmark TinyShakespeare.
