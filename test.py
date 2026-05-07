@@ -24,13 +24,13 @@ model = LLM(num_tokens=128+len(encoder.token_pairs),
 model.load_state_dict(old_state)
 
 model.to("cpu")
-text = "I"
+text = "I "
 tokens = torch.tensor(encoder.encode(text))
 with torch.no_grad():
-  while len(tokens) < 100:
+  while len(tokens) < 1000:
     x = torch.unsqueeze(tokens[-32:], dim=0)
     logits = model(x, mask=True)[0, -1]
-    probs = torch.softmax(logits, dim=-1)
+    probs = torch.softmax(logits/2.0, dim=-1)
     choice = torch.unsqueeze(torch.multinomial(probs, num_samples=1)[-1], dim=0)
     new_token = choice.tolist()
     tokens = torch.cat((tokens, torch.tensor(new_token)), dim=-1)
